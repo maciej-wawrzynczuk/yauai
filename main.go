@@ -13,12 +13,20 @@ func mk_inv() inv {
 	return i
 }
 
-func main() {
-	i := mk_inv()
+func (i inv) mk_json() (string, error) {
 	j, err := json.Marshal(i)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
-	fmt.Println(string(j))
+	return string(j), nil
+}
+
+func main() {
+	i := mk_inv()
+	j, err := i.mk_json()
+	if err != nil {
+		log.Panic(err)
+	}
+	fmt.Println(j)
 }
 
