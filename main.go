@@ -1,15 +1,24 @@
 package main
 
 import (
-	"flag"
+	"encoding/json"
+	"fmt"
 	"log"
 )
 
+type inv map[string]interface{}
+
+func mk_inv() inv {
+	i := make(inv)
+	return i
+}
 
 func main() {
-	var hostname_field string
-	flag.StringVar(&hostname_field, "host_field", "", "Field name to be used as hostname")
-	flag.Parse()
-	log.Println(hostname_field)
+	i := mk_inv()
+	j, err := json.Marshal(i)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(j))
 }
 
