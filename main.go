@@ -8,9 +8,14 @@ import (
 
 type inv map[string]interface{}
 
+
 func mk_inv() inv {
 	i := make(inv)
 	return i
+}
+
+func (i inv) add_group(name string) {
+	i[name] = nil
 }
 
 func (i inv) mk_json() (string, error) {
@@ -23,6 +28,7 @@ func (i inv) mk_json() (string, error) {
 
 func main() {
 	i := mk_inv()
+	i.add_group("foo")
 	j, err := i.mk_json()
 	if err != nil {
 		log.Panic(err)
