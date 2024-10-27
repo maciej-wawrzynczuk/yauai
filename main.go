@@ -18,7 +18,6 @@ func (i inv) add_group(name string) {
 	i[name] = nil
 }
 
-
 func (i inv) mk_json() (string, error) {
 	j, err := json.Marshal(i)
 	if err != nil {
@@ -28,7 +27,7 @@ func (i inv) mk_json() (string, error) {
 }
 
 func (i inv) add_meta() {
-	i["_meta"] = nil
+	i["_meta"] = map[string]interface{}{"hostvars": nil}
 }
 
 func main() {

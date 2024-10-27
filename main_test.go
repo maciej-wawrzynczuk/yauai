@@ -6,9 +6,19 @@ import (
 
 func TestHaMeta(t *testing.T) {
 	i := newInv()
-	_, ok := i["_meta"]
+	meta, ok := i["_meta"]
 	if !ok {
 		t.Fatal("no _meta")
+	}
+
+	metas, ok := meta.(map[string]interface{})
+	if ! ok {
+		t.Fatal("oops, assertion failed")
+	}
+
+	_, ok = metas["hostvars"]
+	if !ok {
+		t.Fatal("no hostvars")
 	}
 }
 
