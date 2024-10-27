@@ -1,15 +1,23 @@
 package main
 
-import(
+import (
 	"testing"
 )
 
+func TestHaMeta(t *testing.T) {
+	i := newInv()
+	_, ok := i["_meta"]
+	if !ok {
+		t.Fatal("no _meta")
+	}
+}
+
 func TestAddGroup(t *testing.T) {
-	i := mk_inv()
+	i := newInv()
 	i.add_group("foo")
 
 	_, ok := i["foo"]
-	if ! ok {
+	if !ok {
 		t.Fatal("key not found")
 	}
 }
