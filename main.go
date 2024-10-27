@@ -8,6 +8,7 @@ import (
 
 type inv map[string]interface{}
 
+
 func newInv() inv {
 	i := make(inv)
 	i.add_meta()
