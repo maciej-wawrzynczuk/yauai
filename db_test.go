@@ -5,7 +5,8 @@ import (
 )
 
 var a_data = []byte(`
-[{"foo": "bar"}]
+[{"foo": "bar"},
+ {"baz": "qux"}]
 `)
 
 
@@ -25,6 +26,9 @@ func TestNewdb(t *testing.T) {
 	sut, err := new_db(a_data)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if len(sut) != 2 {
+		t.Fatal("bad size")
 	}
 	if sut[0]["foo"] != "bar" {
 		t.Fatal("bad value")
