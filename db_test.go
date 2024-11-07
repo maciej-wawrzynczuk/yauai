@@ -22,8 +22,11 @@ func TestHosts(t *testing.T) {
 }
 
 func TestNewdb(t *testing.T) {
-	_, err := new_db(a_data)
+	sut, err := new_db(a_data)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if sut[0]["foo"] != "bar" {
+		t.Fatal("bad value")
 	}
 }
