@@ -22,3 +22,10 @@ func (i inv) MarshalJSON() ([]byte, error) {
 	result, err := json.Marshal(dirty_inv)
 	return result, err
 }
+
+func (i *inv) add_group(g string) {
+	if i.groups == nil {
+		i.groups = make(map[string]group)
+	}
+	i.groups[g] = group{}
+}
