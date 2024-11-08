@@ -2,26 +2,20 @@ package main
 
 import "encoding/json"
 
-type inv map[string]interface{}
-
-func newInv() inv {
-	i := make(inv)
-	i.add_meta()
-	return i
+type inv struct {
+	groups map[string]group
+	meta meta
 }
-
-func (i inv) add_group(name string) {
-	i[name] = nil
+type group struct{
+	hosts map[string]vars
 }
+type meta struct{}
+type vars map[string]string
 
-func (i inv) mk_json() (string, error) {
-	j, err := json.Marshal(i)
-	if err != nil {
-		return "", err
-	}
-	return string(j), nil
-}
+func (i inv) MarshalJSON() ([]byte, error) {
+	dirty_inv := make(map[string]interface{})
+	dirty_inv["_meta"] = i.meta
 
-func (i inv) add_meta() {
-	i["_meta"] = map[string]interface{}{"hostvars": nil}
+	result, err := json.Marshal(dirty_inv)
+	return result, err
 }
