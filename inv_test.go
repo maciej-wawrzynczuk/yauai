@@ -14,3 +14,13 @@ func TestAddGroup(t *testing.T) {
 		t.Fatal("add group don't add group")
 	}
 }
+
+func TestAddGroupTwice(t *testing.T) {
+	sut := inv{}
+	sut.add_group("foo")
+	sut.add_group("foo")
+
+	if len(sut.groups) != 1 {
+		t.Fatal("wrong numbers of goups")
+	}
+}
