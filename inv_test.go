@@ -5,7 +5,7 @@ import (
 )
 
 func TestAddGroup(t *testing.T) {
-	sut := inv{}
+	sut := newInv()
 	sut.add_group("foo")
 
 	_, ok := sut.groups["foo"]
@@ -17,7 +17,7 @@ func TestAddGroup(t *testing.T) {
 
 // TODO: Actually I want to check if adding group twice flattens the existing one.
 func TestAddGroupTwice(t *testing.T) {
-	sut := inv{}
+	sut := newInv()
 	sut.add_group("foo")
 	sut.add_group("foo")
 
@@ -27,7 +27,7 @@ func TestAddGroupTwice(t *testing.T) {
 }
 
 func TestAddHostNoSuchGroup(t *testing.T) {
-	sut := inv{}
+	sut := newInv()
 	err := sut.add_host("h", "g")
 	if err == nil {
 		t.Fatal("it should be error")
@@ -35,7 +35,7 @@ func TestAddHostNoSuchGroup(t *testing.T) {
 }
 
 func TestReallyAddHost(t *testing.T) {
-	sut := inv{}
+	sut := newInv()
 	group_name := "a group"
 	host_name := "a host"
 	sut.add_group(group_name)

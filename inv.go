@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 )
-
+// TODO: Create functions for initialisation
 type inv struct {
 	groups map[string]group
 	meta meta
@@ -14,6 +14,11 @@ type group struct{
 }
 type meta struct{}
 type vars map[string]string
+
+func newInv() *inv{
+	i := inv{}
+	return &i
+}
 
 func (i inv) MarshalJSON() ([]byte, error) {
 	dirty_inv := make(map[string]interface{})
