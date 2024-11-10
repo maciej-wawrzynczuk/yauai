@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 )
-// TODO: Create functions for initialisation
 type inv struct {
 	groups map[string]group
 	meta meta
 }
+
 type group struct{
 	hosts map[string]vars
 }
@@ -41,9 +41,7 @@ func (i inv) get_group(name string) (*group, error) {
 }
 
 func (i *inv) add_group(g string) {
-	newgrp := group{}
-	newgrp.hosts = make(map[string]vars)
-	i.groups[g] = newgrp
+	i.groups[g] = *newGroup()
 }
 
 func (i *inv) add_host(h_name string, g_name string) error {
@@ -53,4 +51,10 @@ func (i *inv) add_host(h_name string, g_name string) error {
 	}
 	group.hosts[h_name] = make(vars)
 	return nil
+}
+
+func newGroup() *group {
+	newgrp := group{}
+	newgrp.hosts = make(map[string]vars)
+	return &newgrp	
 }
