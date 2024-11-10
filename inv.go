@@ -17,6 +17,7 @@ type vars map[string]string
 
 func newInv() *inv{
 	i := inv{}
+	i.groups = make(map[string]group)
 	return &i
 }
 
@@ -31,10 +32,15 @@ func (i inv) MarshalJSON() ([]byte, error) {
 	return result, err
 }
 
-func (i *inv) add_group(g string) {
-	if i.groups == nil {
-		i.groups = make(map[string]group)
+func (i inv) get_group(name string) (*group, error) {
+	g, ok := i.groups[name]
+	if !ok {
+		return nil, errors.New("no such group")
 	}
+	return &g, nil
+}
+
+func (i *inv) add_group(g string) {
 	newgrp := group{}
 	newgrp.hosts = make(map[string]vars)
 	i.groups[g] = newgrp

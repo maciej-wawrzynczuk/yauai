@@ -8,9 +8,9 @@ func TestAddGroup(t *testing.T) {
 	sut := newInv()
 	sut.add_group("foo")
 
-	_, ok := sut.groups["foo"]
+	_, err := sut.get_group("foo")
 
-	if !ok {
+	if err != nil {
 		t.Fatal("add group don't add group")
 	}
 }
