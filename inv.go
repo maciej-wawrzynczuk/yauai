@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"errors"
+)
 
 type inv struct {
 	groups map[string]group
@@ -27,5 +30,16 @@ func (i *inv) add_group(g string) {
 	if i.groups == nil {
 		i.groups = make(map[string]group)
 	}
-	i.groups[g] = group{}
+	newgrp := group{}
+	newgrp.hosts = make(map[string]vars)
+	i.groups[g] = newgrp
+}
+
+func (i *inv) add_host(h_name string, g_name string) error {
+	group, ok := i.groups[g_name]
+	if !ok {
+		return errors.New("no group")
+	}
+	group.hosts[h_name] = make(vars)
+	return nil
 }
