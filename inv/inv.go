@@ -1,23 +1,24 @@
-package main
+package inv
 
 import (
 	"encoding/json"
 	"errors"
 )
 type inv struct {
-	groups map[string]group
+	groups map[string]Group
 	meta meta
 }
 
-type group struct{
-	hosts map[string]vars
+type Group struct{
+	// TODO: try to get rid of public members
+	Hosts map[string]vars
 }
 type meta struct{}
 type vars map[string]string
 
-func newInv() *inv{
+func NewInv() *inv{
 	i := inv{}
-	i.groups = make(map[string]group)
+	i.groups = make(map[string]Group)
 	return &i
 }
 
@@ -32,7 +33,7 @@ func (i inv) MarshalJSON() ([]byte, error) {
 	return result, err
 }
 
-func (i inv) get_group(name string) (*group, error) {
+func (i inv) GetGroup(name string) (*Group, error) {
 	g, ok := i.groups[name]
 	if !ok {
 		return nil, errors.New("no such group")
@@ -40,21 +41,21 @@ func (i inv) get_group(name string) (*group, error) {
 	return &g, nil
 }
 
-func (i *inv) add_group(g string) {
-	i.groups[g] = *newGroup()
+func (i *inv) AddGroup(name string) {
+	i.groups[name] = *newGroup()
 }
 
-func (i *inv) add_host(h_name string, g_name string) error {
+func (i *inv) AddHost(h_name string, g_name string) error {
 	group, ok := i.groups[g_name]
 	if !ok {
 		return errors.New("no group")
 	}
-	group.hosts[h_name] = make(vars)
+	group.Hosts[h_name] = make(vars)
 	return nil
 }
 
-func newGroup() *group {
-	newgrp := group{}
-	newgrp.hosts = make(map[string]vars)
+func newGroup() *Group {
+	newgrp := Group{}
+	newgrp.Hosts = make(map[string]vars)
 	return &newgrp	
 }
