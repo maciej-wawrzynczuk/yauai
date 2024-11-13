@@ -1,17 +1,17 @@
-package main
+package db
 
 import "encoding/json"
 
-type db []map[string]string
+type Db []map[string]string
 
-func new_db(text []byte) (db, error) {
-	v := db{}
+func NewDb(text []byte) (*Db, error) {
+	v := Db{}
 
 	err := json.Unmarshal(text, &v)
-	return v, err
+	return &v, err
 }
 
-func (data *db) hosts(host_field string) []string {
+func (data *Db) Hosts(host_field string) []string {
 	result := make([]string, 0)
 	for i := range *data {
 		h, ok := (*data)[i][host_field]

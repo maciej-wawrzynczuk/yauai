@@ -1,7 +1,8 @@
-package main
+package db_test
 
 import (
 	"testing"
+	"yauai/db"
 )
 
 var a_data = []byte(`
@@ -11,11 +12,13 @@ var a_data = []byte(`
 
 
 func TestHosts(t *testing.T) {
-	sut := db{
-		{"foo": "bar"},
+	var in = []byte(`[{"foo":"bar"}]`)
+	sut, err := db.NewDb(in)
+	if err != nil {
+		t.Fatal(err)
 	}
 
-	result := sut.hosts("foo")
+	result := sut.Hosts("foo")
 
 	if result[0] != "bar" {
 		t.Fatal("bad value")
@@ -23,14 +26,14 @@ func TestHosts(t *testing.T) {
 }
 
 func TestNewdb(t *testing.T) {
-	sut, err := new_db(a_data)
+	sut, err := db.NewDb(a_data)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(sut) != 2 {
+	if len(*sut) != 2 {
 		t.Fatal("bad size")
 	}
-	if sut[0]["foo"] != "bar" {
+	if (*sut)[0]["foo"] != "bar" {
 		t.Fatal("bad value")
 	}
 }
