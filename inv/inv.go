@@ -11,7 +11,7 @@ type inv struct {
 
 type Group struct{
 	// TODO: try to get rid of public members
-	Hosts map[string]vars
+	hosts map[string]vars
 }
 type meta struct{}
 type vars map[string]string
@@ -42,7 +42,10 @@ func (i inv) GetGroup(name string) (*Group, error) {
 }
 
 func (i *inv) AddGroup(name string) {
-	i.groups[name] = *newGroup()
+	_, ok := i.groups[name]
+	if !ok {
+		i.groups[name] = *newGroup()
+	}
 }
 
 func (i *inv) AddHost(h_name string, g_name string) error {
@@ -50,12 +53,20 @@ func (i *inv) AddHost(h_name string, g_name string) error {
 	if !ok {
 		return errors.New("no group")
 	}
-	group.Hosts[h_name] = make(vars)
+	group.hosts[h_name] = make(vars)
 	return nil
 }
 
 func newGroup() *Group {
 	newgrp := Group{}
-	newgrp.Hosts = make(map[string]vars)
+	newgrp.hosts = make(map[string]vars)
 	return &newgrp	
+}
+
+func (g Group) HostNames() []string {
+	result := []string{}
+	for h := range g.hosts {
+		result = append(result, h)
+	}
+	return result
 }

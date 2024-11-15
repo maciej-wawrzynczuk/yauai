@@ -16,7 +16,6 @@ func TestAddGroup(t *testing.T) {
 	}
 }
 
-// TODO: Actually I want to check if adding group twice flattens the existing one.
 func TestAddHostNoSuchGroup(t *testing.T) {
 	sut := inv.NewInv()
 	err := sut.AddHost("h", "g")
@@ -38,8 +37,25 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, ok := g.Hosts[host_name]
-	if !ok {
-		t.Fatal("no host in group")
+	
+	if (g.HostNames())[0] != host_name {
+		t.Fatal("wrong hostname")
+	}
+}
+
+func TestAddGroupTwice(t *testing.T) {
+	sut := inv.NewInv()
+	g_name := "foo_group"
+	h_name := "bar_host"
+	sut.AddGroup(g_name)
+	sut.AddHost(h_name, g_name)
+	sut.AddGroup(g_name)
+
+	g, err := sut.GetGroup(g_name)
+	if err != nil {
+		t.Fatal("no group")
+	}
+	if len(g.HostNames()) != 1 {
+		t.Fatal("there should be exactly one")
 	}
 }

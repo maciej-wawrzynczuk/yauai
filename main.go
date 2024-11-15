@@ -7,8 +7,6 @@ import (
 	"yauai/inv"
 )
 
-// TODO: Move stuff to packages and use public interface only
-
 func main() {
 	i := inv.NewInv()
 	i.AddGroup("foo")
