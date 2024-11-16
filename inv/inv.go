@@ -4,25 +4,24 @@ import (
 	"encoding/json"
 	"errors"
 )
-type inv struct {
+type Inv struct {
 	groups map[string]Group
 	meta meta
 }
 
 type Group struct{
-	// TODO: try to get rid of public members
 	hosts map[string]vars
 }
 type meta struct{}
 type vars map[string]string
 
-func NewInv() *inv{
-	i := inv{}
+func NewInv() *Inv{
+	i := Inv{}
 	i.groups = make(map[string]Group)
 	return &i
 }
 
-func (i inv) MarshalJSON() ([]byte, error) {
+func (i Inv) MarshalJSON() ([]byte, error) {
 	dirty_inv := make(map[string]interface{})
 	for name, group := range i.groups {
 		dirty_inv[name] = group
@@ -33,7 +32,7 @@ func (i inv) MarshalJSON() ([]byte, error) {
 	return result, err
 }
 
-func (i inv) GetGroup(name string) (*Group, error) {
+func (i Inv) GetGroup(name string) (*Group, error) {
 	g, ok := i.groups[name]
 	if !ok {
 		return nil, errors.New("no such group")
@@ -41,14 +40,14 @@ func (i inv) GetGroup(name string) (*Group, error) {
 	return &g, nil
 }
 
-func (i *inv) AddGroup(name string) {
+func (i *Inv) AddGroup(name string) {
 	_, ok := i.groups[name]
 	if !ok {
 		i.groups[name] = *newGroup()
 	}
 }
 
-func (i *inv) AddHost(h_name string, g_name string) error {
+func (i *Inv) AddHost(h_name string, g_name string) error {
 	group, ok := i.groups[g_name]
 	if !ok {
 		return errors.New("no group")
