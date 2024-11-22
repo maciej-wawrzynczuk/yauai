@@ -1,10 +1,27 @@
 package inv_test
 
+// TODO: better testing. Output does not show a host despite aparently proper data
+// don't test private stuff
+
 import (
+	"encoding/json"
 	"testing"
 	"yauai/inv"
 )
 
+func TestJustUnmashal(t *testing.T) {
+	sut := inv.NewInv()
+	text, err := json.Marshal(sut)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var any interface{}
+	err = json.Unmarshal(text, &any)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
 func TestAddGroup(t *testing.T) {
 	sut := inv.NewInv()
 	sut.AddGroup("foo")
