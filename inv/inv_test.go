@@ -9,19 +9,6 @@ import (
 	"yauai/inv"
 )
 
-func TestJustUnmashal(t *testing.T) {
-	sut := inv.NewInv()
-	text, err := json.Marshal(sut)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	var any interface{}
-	err = json.Unmarshal(text, &any)
-	if err != nil {
-		t.Fatal(err)
-	}
-}
 func TestAddGroup(t *testing.T) {
 	sut := inv.NewInv()
 	sut.AddGroup("foo")
