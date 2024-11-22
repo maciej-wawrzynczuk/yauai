@@ -46,15 +46,32 @@ func TestReallyAddHost(t *testing.T) {
 	sut.AddGroup(group_name)
 	err := sut.AddHost(host_name, group_name)
 	if err != nil {
-		t.Fatal("there should be no error this time")
+		t.Fatal(err)
 	}
-	g, err := sut.GetGroup(group_name)
+	text, err := json.Marshal(sut)
 	if err != nil {
 		t.Fatal(err)
 	}
-	
-	if (g.HostNames())[0] != host_name {
-		t.Fatal("wrong hostname")
+
+	type hosts map[string]interface{}
+	type group map[string]hosts
+	var any map[string]group
+	err = json.Unmarshal(text, &any)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g, ok := any[group_name]
+	if !ok {
+		t.Fatal("no group")
+	}
+
+	h, ok := g["hosts"]
+	if !ok {
+		t.Fatal("no hosts entry")
+	}
+	_, ok = h[host_name]
+	if !ok {
+		t.Fatal("no host")
 	}
 }
 
