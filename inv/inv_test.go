@@ -10,8 +10,9 @@ import (
 )
 
 func TestAddGroup(t *testing.T) {
+	group_name := "foo"
 	sut := inv.NewInv()
-	sut.AddGroup("foo")
+	sut.AddGroup(group_name)
 
 	text, err := json.Marshal(sut)
 	if err != nil {
@@ -28,7 +29,7 @@ func TestAddGroup(t *testing.T) {
 	if !ok {
 		t.Fail()
 	}
-	_, ok = a_map["foo"]
+	_, ok = a_map[group_name]
 	if !ok {
 		t.Fail()
 	}
