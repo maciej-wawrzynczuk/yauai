@@ -10,7 +10,7 @@ type Inv struct {
 }
 
 type Group struct{
-	hosts map[string]vars
+	Hosts map[string]vars `json:"hosts"`
 }
 type meta struct{}
 type vars map[string]string
@@ -52,19 +52,19 @@ func (i *Inv) AddHost(h_name string, g_name string) error {
 	if !ok {
 		return errors.New("no group")
 	}
-	group.hosts[h_name] = make(vars)
+	group.Hosts[h_name] = make(vars)
 	return nil
 }
 
 func newGroup() *Group {
 	newgrp := Group{}
-	newgrp.hosts = make(map[string]vars)
+	newgrp.Hosts = make(map[string]vars)
 	return &newgrp	
 }
 
 func (g Group) HostNames() []string {
 	result := []string{}
-	for h := range g.hosts {
+	for h := range g.Hosts {
 		result = append(result, h)
 	}
 	return result
