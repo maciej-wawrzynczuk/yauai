@@ -11,9 +11,27 @@ import (
 )
 
 func main() {
-	// TODO determin hostname key
-	host_key := flag.String("host_key", "", "KEy to become hostname")
-	data, err := io.ReadAll(os.Stdin)
+	host_key := flag.String("host_key", "", "Key to become hostname")
+	input_file := flag.String("input_file", "", "Input file. Stdin if omit")
+	flag.Parse()
+
+	if *host_key == "" {
+		fmt.Println("Need a hostname field")
+		os.Exit(1)
+	}
+
+	var f *os.File
+	if *input_file != "" {
+		var err error
+		f, err = os.Open(*input_file)
+		if err != nil {
+			fmt.Println(err)
+		} 
+	} else {
+		f = os.Stdin
+	}
+
+	data, err := io.ReadAll(f)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
