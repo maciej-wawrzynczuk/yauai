@@ -19,17 +19,13 @@ func TestAddGroup(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var any interface{}
+	var any map[string]interface{}
 	err = json.Unmarshal(text, &any)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	a_map, ok := any.(map[string]interface{})
-	if !ok {
-		t.Fail()
-	}
-	_, ok = a_map[group_name]
+	_, ok := any[group_name]
 	if !ok {
 		t.Fail()
 	}
