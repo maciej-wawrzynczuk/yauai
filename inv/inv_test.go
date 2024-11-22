@@ -26,10 +26,24 @@ func TestAddGroup(t *testing.T) {
 	sut := inv.NewInv()
 	sut.AddGroup("foo")
 
-	_, err := sut.GetGroup("foo")
-
+	text, err := json.Marshal(sut)
 	if err != nil {
-		t.Fatal("add group don't add group")
+		t.Fatal(err)
+	}
+
+	var any interface{}
+	err = json.Unmarshal(text, &any)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	a_map, ok := any.(map[string]interface{})
+	if !ok {
+		t.Fail()
+	}
+	_, ok = a_map["foo"]
+	if !ok {
+		t.Fail()
 	}
 }
 
