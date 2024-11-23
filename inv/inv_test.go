@@ -4,34 +4,18 @@ package inv_test
 // TODO: test for _meta
 
 import (
-	"encoding/json"
 	"testing"
 	"yauai/inv"
+	"yauai/testutils"
 )
 
-type Hosts map[string]interface{}
-type Group map[string]Hosts
-type Inv2 map[string]Group
-
-func Extract(i inv.Inv) (*Inv2, error) {
-	text, err := json.Marshal(i)
-	if err != nil {
-		return nil, err
-	}
-	any := new(Inv2)
-	err = json.Unmarshal(text, any)
-	if err != nil {
-		return nil, err
-	}
-	return any, nil
-}
 
 func TestAddGroup(t *testing.T) {
 	group_name := "foo"
 	sut := inv.NewInv()
 	sut.AddGroup(group_name)
 
-	any, err := Extract(*sut)
+	any, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +42,7 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	any, err := Extract(*sut)
+	any, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,7 +68,7 @@ func TestAddGroupTwice(t *testing.T) {
 	sut.AddGroup(g_name)
 	sut.AddHost(h_name, g_name)
 	sut.AddGroup(g_name)
-	any, err := Extract(*sut)
+	any, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
