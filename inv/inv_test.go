@@ -1,5 +1,6 @@
 package inv_test
 
+// TODO: test for _meta
 // TODO: better testing. Output does not show a host despite aparently proper data
 // don't test private stuff
 
@@ -9,23 +10,33 @@ import (
 	"yauai/inv"
 )
 
+type hosts map[string]interface{}
+type group map[string]hosts
+type inv2 map[string]group
+
+func extract(i inv.Inv) (*inv2, error) {
+	text, err := json.Marshal(i)
+	if err != nil {
+		return nil, err
+	}
+	any := new(inv2)
+	err = json.Unmarshal(text, any)
+	if err != nil {
+		return nil, err
+	}
+	return any, nil
+}
+
 func TestAddGroup(t *testing.T) {
 	group_name := "foo"
 	sut := inv.NewInv()
 	sut.AddGroup(group_name)
 
-	text, err := json.Marshal(sut)
+	any, err := extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	var any map[string]interface{}
-	err = json.Unmarshal(text, &any)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	_, ok := any[group_name]
+	_, ok := (*any)[group_name]
 	if !ok {
 		t.Fail()
 	}
@@ -53,9 +64,7 @@ func TestReallyAddHost(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	type hosts map[string]interface{}
-	type group map[string]hosts
-	var any map[string]group
+	var any inv2
 	err = json.Unmarshal(text, &any)
 	if err != nil {
 		t.Fatal(err)
