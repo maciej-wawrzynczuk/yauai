@@ -9,16 +9,16 @@ import (
 	"yauai/inv"
 )
 
-type hosts map[string]interface{}
-type group map[string]hosts
-type inv2 map[string]group
+type Hosts map[string]interface{}
+type Group map[string]Hosts
+type Inv2 map[string]Group
 
-func extract(i inv.Inv) (*inv2, error) {
+func Extract(i inv.Inv) (*Inv2, error) {
 	text, err := json.Marshal(i)
 	if err != nil {
 		return nil, err
 	}
-	any := new(inv2)
+	any := new(Inv2)
 	err = json.Unmarshal(text, any)
 	if err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func TestAddGroup(t *testing.T) {
 	sut := inv.NewInv()
 	sut.AddGroup(group_name)
 
-	any, err := extract(*sut)
+	any, err := Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	any, err := extract(*sut)
+	any, err := Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,7 +84,7 @@ func TestAddGroupTwice(t *testing.T) {
 	sut.AddGroup(g_name)
 	sut.AddHost(h_name, g_name)
 	sut.AddGroup(g_name)
-	any, err := extract(*sut)
+	any, err := Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
