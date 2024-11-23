@@ -1,6 +1,5 @@
 package inv_test
 
-// TODO: create test utils module
 // TODO: test for _meta
 
 import (
@@ -15,7 +14,7 @@ func TestAddGroup(t *testing.T) {
 	sut := inv.NewInv()
 	sut.AddGroup(group_name)
 
-	any, err := testutils.Extract(*sut)
+	any, _, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +41,7 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	any, err := testutils.Extract(*sut)
+	any, _, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,7 +67,7 @@ func TestAddGroupTwice(t *testing.T) {
 	sut.AddGroup(g_name)
 	sut.AddHost(h_name, g_name)
 	sut.AddGroup(g_name)
-	any, err := testutils.Extract(*sut)
+	any, _, err := testutils.Extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,4 +84,13 @@ func TestAddGroupTwice(t *testing.T) {
 	if !ok {
 		t.Fatal("host not found")
 	}
+}
+
+func TestEmptyMeta(t *testing.T) {
+	sut := inv.NewInv()
+	_, _, err := testutils.Extract(*sut)
+	if err != nil {
+		t.Fatal(err)
+	}
+	
 }
