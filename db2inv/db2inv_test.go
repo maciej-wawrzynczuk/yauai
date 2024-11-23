@@ -6,6 +6,7 @@ import(
 	"yauai/db"
 )
 
+// TODO: How to test without that damn methods?
 
 func TestSomething(t *testing.T) {
 	in := []byte(`[{"foo":"bar"}]`)

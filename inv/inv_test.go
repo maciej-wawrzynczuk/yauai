@@ -1,8 +1,7 @@
 package inv_test
 
+// TODO: create test utils module
 // TODO: test for _meta
-// TODO: better testing. Output does not show a host despite aparently proper data
-// don't test private stuff
 
 import (
 	"encoding/json"

@@ -59,7 +59,7 @@ func (i *Inv) AddHost(h_name string, g_name string) error {
 func newGroup() *Group {
 	newgrp := Group{}
 	newgrp.Hosts = make(map[string]vars)
-	return &newgrp	
+	return &newgrp
 }
 
 func (g Group) HostNames() []string {
