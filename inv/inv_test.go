@@ -59,17 +59,11 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	text, err := json.Marshal(sut)
+	any, err := extract(*sut)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	var any inv2
-	err = json.Unmarshal(text, &any)
-	if err != nil {
-		t.Fatal(err)
-	}
-	g, ok := any[group_name]
+	g, ok := (*any)[group_name]
 	if !ok {
 		t.Fatal("no group")
 	}
