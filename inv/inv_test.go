@@ -85,12 +85,21 @@ func TestAddGroupTwice(t *testing.T) {
 	sut.AddGroup(g_name)
 	sut.AddHost(h_name, g_name)
 	sut.AddGroup(g_name)
-
-	g, err := sut.GetGroup(g_name)
+	any, err := extract(*sut)
 	if err != nil {
-		t.Fatal("no group")
+		t.Fatal(err)
 	}
-	if len(g.HostNames()) != 1 {
-		t.Fatal("there should be exactly one")
+
+	g, ok := (*any)[g_name]
+	if !ok {
+		t.Fatal("Group not found")
+	}
+	hosts, ok := g["hosts"]
+	if !ok {
+		t.Fatal("no hosts field. Really nasty")
+	}
+	_, ok = hosts[h_name]
+	if !ok {
+		t.Fatal("host not found")
 	}
 }
