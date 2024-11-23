@@ -8,15 +8,15 @@ import (
 
 type Hosts map[string]interface{}
 type Group map[string]Hosts
-type Inv2 map[string]Group
+type Groups map[string]Group
 type Meta interface{}
 
-func Extract(i inv.Inv) (*Inv2, *Meta, error) {
+func Extract(i inv.Inv) (*Groups, *Meta, error) {
 	text, err := json.Marshal(i)
 	if err != nil {
 		return nil, nil, err
 	}
-	any := new(Inv2)
+	any := new(Groups)
 	err = json.Unmarshal(text, any)
 	if err != nil {
 		return nil, nil, err
