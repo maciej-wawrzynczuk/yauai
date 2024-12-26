@@ -3,6 +3,8 @@ package inv
 import (
 	"encoding/json"
 	"errors"
+	"maps"
+	"slices"
 )
 type Inv struct {
 	groups map[string]Group
@@ -68,4 +70,10 @@ func (g Group) HostNames() []string {
 		result = append(result, h)
 	}
 	return result
+}
+
+// Public interface for testing. Damn.
+
+func (i Inv) Groups() []Group {
+	return slices.Collect(maps.Values(i.groups))
 }
