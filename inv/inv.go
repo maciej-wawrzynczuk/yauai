@@ -65,14 +65,9 @@ func newGroup() *Group {
 }
 
 func (g Group) HostNames() []string {
-	result := []string{}
-	for h := range g.Hosts {
-		result = append(result, h)
-	}
-	return result
+	return slices.Collect(maps.Keys(g.Hosts))
 }
 
-// Public interface for testing. Damn.
 
 func (i Inv) Groups() []Group {
 	return slices.Collect(maps.Values(i.groups))

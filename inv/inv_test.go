@@ -40,23 +40,21 @@ func TestReallyAddHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-//	any, _, err := testutils.Extract(*sut)
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-//	g, ok := (*any)[group_name]
-//	if !ok {
-//		t.Fatal("no group")
-//	}
-//
-//	h, ok := g["hosts"]
-//	if !ok {
-//		t.Fatal("no hosts entry")
-//	}
-//	_, ok = h[host_name]
-//	if !ok {
-//		t.Fatal("no host")
-//	}
+	g, err := sut.GetGroup(group_name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	hosts := g.HostNames()
+	good := false
+	for _, h := range hosts {
+		if h == host_name {
+			good = true
+			break
+		}
+	}
+	if !good {
+		t.Fatal("host not found")
+	}
 }
 
 func TestAddGroupTwice(t *testing.T) {
