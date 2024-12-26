@@ -16,21 +16,18 @@ func TestAddGroup(t *testing.T) {
 	if len(sut.Groups()) != 1{
 		t.Fatal("Ther's should be one group")
 	}
-//	any, _, err := testutils.Extract(*sut)
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-//	_, ok := (*any)[group_name]
-//	if !ok {
-//		t.Fail()
-//	}
+	
+	_, err := sut.GetGroup(group_name)
+	if err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestAddHostNoSuchGroup(t *testing.T) {
 	sut := inv.NewInv()
 	err := sut.AddHost("h", "g")
 	if err == nil {
-		t.Fatal("it should be error")
+		t.Fatal("it should be an error")
 	}
 }
 
