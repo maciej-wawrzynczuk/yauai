@@ -41,7 +41,7 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	i, err := db2inv.Db2inv(*db, *host_key)
+	i, err := db2inv.Db2inv_to_drop(*db, *host_key)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

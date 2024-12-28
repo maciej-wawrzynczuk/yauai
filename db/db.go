@@ -2,7 +2,8 @@ package db
 
 import "encoding/json"
 
-type Db []map[string]string
+type Entry map[string]string
+type Db []Entry
 
 func FromJson(text []byte) (*Db, error) {
 	v := Db{}

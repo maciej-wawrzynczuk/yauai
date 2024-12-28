@@ -1,11 +1,19 @@
 package db2inv
 
-import(
+import (
 	"yauai/db"
 	"yauai/inv"
 )
 
-func Db2inv(db db.Db, host_key string, group_keys ...string) (*inv.Inv, error) {
+// TODO: Make a class.
+
+type Db2inv struct {
+	host_key string
+	group_keys []string
+}
+
+
+func Db2inv_to_drop(db db.Db, host_key string, group_keys ...string) (*inv.Inv, error) {
 	default_group := "ungroupped"
 	i := inv.NewInv()
 	i.AddGroup(default_group)
@@ -17,4 +25,4 @@ func Db2inv(db db.Db, host_key string, group_keys ...string) (*inv.Inv, error) {
 	}
 
 	return i, nil
-} 
+}
