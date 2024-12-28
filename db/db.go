@@ -4,7 +4,7 @@ import "encoding/json"
 
 type Db []map[string]string
 
-func NewDb(text []byte) (*Db, error) {
+func FromJson(text []byte) (*Db, error) {
 	v := Db{}
 
 	err := json.Unmarshal(text, &v)

@@ -26,7 +26,7 @@ func main() {
 		f, err = os.Open(*input_file)
 		if err != nil {
 			fmt.Println(err)
-		} 
+		}
 	} else {
 		f = os.Stdin
 	}
@@ -36,7 +36,7 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	db, err := db.NewDb(data)
+	db, err := db.FromJson(data)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

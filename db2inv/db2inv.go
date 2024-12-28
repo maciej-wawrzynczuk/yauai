@@ -5,7 +5,7 @@ import(
 	"yauai/inv"
 )
 
-func Db2inv(db db.Db, host_key string, groups ...string) (*inv.Inv, error) {
+func Db2inv(db db.Db, host_key string, group_keys ...string) (*inv.Inv, error) {
 	default_group := "ungroupped"
 	i := inv.NewInv()
 	i.AddGroup(default_group)
