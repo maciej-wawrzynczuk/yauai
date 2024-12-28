@@ -1,6 +1,7 @@
 package db2inv_test
 
 import (
+	"slices"
 	"testing"
 	"yauai/db"
 	"yauai/db2inv"
@@ -13,18 +14,20 @@ func TestAHost(t *testing.T) {
 		t.Fatal("it shouldn't happen!!!!")
 	}
 
-	sut, err := db2inv.Db2inv_to_drop(*tdb, "foo")
+	sut := db2inv.New("foo")
+	e := (*tdb)[0]
+	err = sut.AddEntry(e)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	g, err := sut.GetGroup("ungroupped")
+	g, err := sut.Inv().GetGroup("ungroupped")
 	if err != nil {
 		t.Fatal(err)
 	}
-	names := g.HostNames()
-	if names[0] != "bar" {
-		t.Fatal("bad hostname")
+
+	if !slices.Contains(g.HostNames(), "bar") {
+		t.Fatal("no host!")
 	}
 }
 
