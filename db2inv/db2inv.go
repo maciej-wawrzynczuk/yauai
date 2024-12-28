@@ -34,16 +34,3 @@ func (di *Db2inv) AddEntry(e db.Entry) error{
 func (di *Db2inv) Inv() *inv.Inv{
 	return &di.i
 }
-
-func Db2inv_to_drop(db db.Db, host_key string, group_keys ...string) (*inv.Inv, error) {
-	i := inv.NewInv()
-	i.AddGroup(default_group)
-	for _, name := range db.Hosts(host_key) {
-		err := i.AddHost(name, default_group)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return i, nil
-}
