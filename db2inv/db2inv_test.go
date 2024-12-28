@@ -6,9 +6,7 @@ import(
 	"yauai/db"
 )
 
-// TODO: How to test without that damn methods?
-
-func TestSomething(t *testing.T) {
+func TestAHost(t *testing.T) {
 	in := []byte(`[{"foo":"bar"}]`)
 	tdb, err := db.NewDb(in)
 	if err != nil {

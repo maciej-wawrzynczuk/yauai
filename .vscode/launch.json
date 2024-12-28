@@ -12,7 +12,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}",
             "args": [
-                "-host_key", "foo",
+                "-host_key", "hostname",
                 "-input_file", "${workspaceFolder}\\test_data.json"
             ]
         }
