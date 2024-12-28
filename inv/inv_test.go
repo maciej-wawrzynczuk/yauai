@@ -65,30 +65,19 @@ func TestAddGroupTwice(t *testing.T) {
 	sut.AddHost(h_name, g_name)
 	sut.AddGroup(g_name)
 
-//	any, _, err := testutils.Extract(*sut)
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-//
-//	g, ok := (*any)[g_name]
-//	if !ok {
-//		t.Fatal("Group not found")
-//	}
-//	hosts, ok := g["hosts"]
-//	if !ok {
-//		t.Fatal("no hosts field. Really nasty")
-//	}
-//	_, ok = hosts[h_name]
-//	if !ok {
-//		t.Fatal("host not found")
-//	}
-}
+	g, err := sut.GetGroup(g_name)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-func TestEmptyMeta(t *testing.T) {
-//	sut := inv.NewInv()
-//	_, _, err := testutils.Extract(*sut)
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-	
+	found := false
+	for _, h := range g.HostNames() {
+		if h == h_name {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatal("Host not found")
+	}
 }
