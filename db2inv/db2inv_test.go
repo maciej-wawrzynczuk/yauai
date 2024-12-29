@@ -5,6 +5,7 @@ import (
 	"testing"
 	"yauai/db"
 	"yauai/db2inv"
+	// "yauai/inv"
 )
 
 func TestAHost(t *testing.T) {
@@ -31,24 +32,24 @@ func TestAHost(t *testing.T) {
 	}
 }
 
-// func Test1group(t *testing.T) {
-// 	data := []byte(`[{"hostname": "host1", "group": "group1"}]`)
-// 	db, err := db.FromJson(data)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
+func Test1group(t *testing.T) {
+	data := []byte(`[{"hostname": "host1", "group": "group1"}]`)
+	db, err := db.FromJson(data)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-// 	sut, err := db2inv.Db2inv(*db, "hostname", "group")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
+	sut, err := db2inv.MkInv(db, "hostname", "group")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-// 	g, err := sut.GetGroup("group1")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
+	g, err := sut.GetGroup("group1")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-// 	if !slices.Contains(g.HostNames(), "host1") {
-// 		t.Fatal("No host")
-// 	}
-// }
+	if !slices.Contains(g.HostNames(), "host1") {
+		t.Fatal("No host")
+	}
+}
